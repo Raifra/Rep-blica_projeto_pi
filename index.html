@@ -308,21 +308,21 @@
         }
     </style>
 </head>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.85em%22 x=%2250%22 font-size=%2285%22 text-anchor=%22middle%22>☕</text></svg>">
 <body>
+    
     <div class="app-container">
         <div class="lateral">
             <div class="lateral-header">
                 <div class="logo">
                     <div class="logo-icon">
-                        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZmlsbD0iI2YwZTFkZCIgZD0iTTE4LDhIMVYxMUgxOE0xOCwxM0gxVjE2SDE4TTIsNUgxOFYxOUgyVjVNMjAsM0g0QTIgMiAwIDAgMCwyLDVWMjFBMiAyIDAgMCAwLDQsMjNIMjBBMiAyIDAgMCAwLDIyLDIxVjVBMiAyIDAgMCAwLDIwLDNNMTksMTdIN1YxNUgxOVYxN00xOSwxMUg3VjlIMTlWMTEiLz48L3N2Zz4=" alt="Logo Brasil República">
+                        <img src="images/cafe.png" alt="Logo Brasil República">
                     </div>
                     <h3>Brasil República</h3>
                 </div>
                 <button class="new-chat-btn">Nova conversa 😄</button>
             </div>
-            <div class="recent-chats">
-                <div class="section-title">Login</div>
-            </div>
+            
         </div>
         
         <div class="chat-container">
@@ -351,7 +351,7 @@
 
     <script>
         // Configurações da API OpenRouter
-        const OPENROUTER_API_KEY = "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";
+        const OPENROUTER_API_KEY = "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";
         const OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions";
         const MODEL_NAME = "deepseek/deepseek-chat";
 
@@ -510,7 +510,11 @@
                                    "Se não souber, diga que não tem informações suficientes. " +
                                    "Responda somente sobre a Primeira República Brasileira, não faça comparações com outros períodos ou países. " +
                                    "Se for sobre qualquer outro assunto, diga que você não é especialista nesse assunto. " +
-                                   "Se disserem oi, olá, bom dia, boa tarde ou boa noite, responda com uma saudação amigável."
+                                   "Se disserem oi, olá, bom dia, boa tarde ou boa noite, responda com uma saudação amigável."+
+                                    "Se perguntarem sobre a Primeira República Brasileira, responda com informações detalhadas e relevantes."+
+                                    "Se perguntarem sobre a história do Brasil, responda com informações detalhadas e relevantes sobre a Primeira República Brasileira."+
+                                    "Induza as pessoas nas respostas a fazer perguntas sobre a Primeira República Brasileira, " +
+                                    "Não responda perguntas sobre outros assuntos, apenas sobre a Primeira República Brasileira. " 
                         },
                         {
                             "role": "user",
