@@ -94,45 +94,6 @@
             background-color: #3c54a9;
         }
 
-        .quiz-section {
-            margin-top: 30px;
-            padding: 15px;
-            background-color: var(--sidebar-bg);
-            border-radius: 8px;
-        }
-
-        .section-title {
-            color: var(--section-title);
-            font-size: 14px;
-            font-weight: 600;
-            margin-bottom: 12px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .start-quiz-btn {
-            width: 100%;
-            padding: 10px;
-            border-radius: 6px;
-            background-color: var(--secondary-color);
-            color: white;
-            font-weight: 500;
-            cursor: pointer;
-            border: none;
-            transition: all 0.2s;
-            margin-bottom: 15px;
-        }
-
-        .start-quiz-btn:hover {
-            background-color: #4a6b9b;
-        }
-
-        .quiz-instructions {
-            font-size: 13px;
-            color: var(--light-text);
-            line-height: 1.4;
-        }
-
         .chat-container {
             flex: 1;
             display: flex;
@@ -191,33 +152,6 @@
             background-color: var(--bot-message-bg);
             margin-right: auto;
             border-bottom-left-radius: 0;
-        }
-
-        .quiz-question {
-            background-color: #2d3748;
-            border-left: 4px solid var(--secondary-color);
-        }
-
-        .quiz-feedback {
-            background-color: #2d3748;
-            border-left: 4px solid var(--accent-color);
-        }
-
-        .correct-feedback {
-            background-color: rgba(76, 175, 80, 0.1);
-            border-left: 4px solid var(--correct-answer);
-        }
-
-        .wrong-feedback {
-            background-color: rgba(244, 67, 54, 0.1);
-            border-left: 4px solid var(--wrong-answer);
-        }
-
-        .quiz-results {
-            background-color: #2d3748;
-            border-left: 4px solid var(--primary-color);
-            padding: 20px;
-            margin-top: 20px;
         }
 
         .input-container {
@@ -389,12 +323,6 @@
             <div class="recent-chats">
                 <div class="section-title">Login</div>
             </div>
-            <div class="quiz-section">
-                <button id="startQuizBtn" class="start-quiz-btn">Iniciar Quiz 🇧🇷</button>
-                <div class="quiz-instructions">
-                  
-                </div>
-            </div>
         </div>
         
         <div class="chat-container">
@@ -427,67 +355,15 @@
         const OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions";
         const MODEL_NAME = "deepseek/deepseek-chat";
 
-        // Perguntas do quiz
-        const QUIZ_QUESTIONS = [
-            {
-                "pergunta": "Quem foi o primeiro presidente da República Brasileira?",
-                "resposta": "Marechal Deodoro da Fonseca",
-                "dica": "Foi o líder do golpe que instaurou a República em 1889."
-            },
-            {
-                "pergunta": "O que foi a Política dos Governadores?",
-                "resposta": "Um acordo entre o governo federal e as oligarquias estaduais",
-                "dica": "Era uma troca de apoio político entre o presidente e os governadores."
-            },
-            {
-                "pergunta": "Em que ano ocorreu a Revolta da Vacina?",
-                "resposta": "1904",
-                "dica": "Foi durante o governo de Rodrigues Alves."
-            },
-            {
-                "pergunta": "Qual foi o principal produto de exportação do Brasil durante a Primeira República?",
-                "resposta": "Café",
-                "dica": "Era cultivado principalmente em São Paulo e Minas Gerais."
-            },
-            {
-                "pergunta": "Como ficou conhecido o sistema político da Primeira República?",
-                "resposta": "Política do Café com Leite",
-                "dica": "Referia-se à alternância de poder entre políticos de dois estados."
-            },
-            {
-                "pergunta": "Qual foi a principal revolta ocorrida no sertão nordestino?",
-                "resposta": "Guerra de Canudos",
-                "dica": "Foi liderada por Antônio Conselheiro."
-            },
-            {
-                "pergunta": "Quem foi o presidente durante a Primeira Guerra Mundial?",
-                "resposta": "Venceslau Brás",
-                "dica": "Seu governo ocorreu entre 1914 e 1918."
-            },
-            {
-                "pergunta": "Qual movimento militar marcou o fim da Primeira República?",
-                "resposta": "Revolução de 1930",
-                "dica": "Foi liderada por Getúlio Vargas."
-            }
-        ];
-
         // Estado da aplicação
         let currentChatId = null;
         let chatHistory = {};
-        let quizState = {
-            active: false,
-            questions: [],
-            currentQuestion: null,
-            correctAnswers: 0,
-            totalQuestions: 0
-        };
 
         // Elementos do DOM
         const chatArea = document.getElementById('chatArea');
         const userInput = document.getElementById('userInput');
         const sendButton = document.getElementById('sendButton');
         const newChatBtn = document.querySelector('.new-chat-btn');
-        const startQuizBtn = document.getElementById('startQuizBtn');
 
         // Inicialização
         document.addEventListener('DOMContentLoaded', () => {
@@ -549,11 +425,11 @@
             
             chatArea.innerHTML = '';
             messages.forEach(message => {
-                addMessage(message.content, message.isUser, message.isQuiz, message.isFeedback, message.isCorrect);
+                addMessage(message.content, message.isUser);
             });
         }
 
-        function addMessage(text, isUser, isQuiz = false, isFeedback = false, isCorrect = null) {
+        function addMessage(text, isUser) {
             const messageDiv = document.createElement('div');
             
             // Determinar as classes CSS com base no tipo de mensagem
@@ -563,17 +439,6 @@
                 messageClasses.push('user-message');
             } else {
                 messageClasses.push('bot-message');
-            }
-            
-            if (isQuiz) {
-                messageClasses.push('quiz-question');
-            }
-            
-            if (isFeedback) {
-                messageClasses.push('quiz-feedback');
-                if (isCorrect !== null) {
-                    messageClasses.push(isCorrect ? 'correct-feedback' : 'wrong-feedback');
-                }
             }
             
             messageDiv.className = messageClasses.join(' ');
@@ -599,9 +464,6 @@
             newChatBtn.addEventListener('click', () => {
                 createNewChat();
             });
-            
-            // Iniciar quiz
-            startQuizBtn.addEventListener('click', startQuiz);
         }
 
         async function sendMessage() {
@@ -612,25 +474,13 @@
             addMessage(question, true);
             chatHistory[currentChatId].push({
                 content: question,
-                isUser: true,
-                isQuiz: quizState.active
+                isUser: true
             });
             
             userInput.value = '';
             userInput.focus();
             
-            // Verificar se está no modo quiz
-            if (quizState.active) {
-                if (question.toLowerCase() === 'sair') {
-                    endQuiz();
-                    return;
-                }
-                
-                processQuizAnswer(question);
-                return;
-            }
-            
-            // Processar resposta normal
+            // Processar resposta
             try {
                 const resposta = await getAIResponse(question);
                 
@@ -649,29 +499,6 @@
         }
 
         async function getAIResponse(question) {
-            // Respostas simuladas para perguntas comuns
-            const RESPOSTAS_SIMULADAS = {
-                "quem foi o primeiro presidente": "O primeiro presidente da República Brasileira foi Marechal Deodoro da Fonseca (1889-1891), que liderou o golpe que instaurou a República.",
-                "o que foi a política dos governadores": "A Política dos Governadores foi um acordo entre o governo federal e as oligarquias estaduais durante a República Velha, onde o governo federal apoiava os governadores estaduais que, em troca, garantiam apoio no Congresso.",
-                "o que foi a revolta da vacina": "A Revolta da Vacina (1904) foi uma revolta popular no Rio de Janeiro contra a obrigatoriedade da vacinação contra a varíola, implementada por Oswaldo Cruz durante o governo Rodrigues Alves.",
-                "quem foi getúlio vargas": "Getúlio Vargas assumiu o poder em 1930, marcando o fim da Primeira República. Durante o período de 1889-1930, ele não era uma figura central, mas posteriormente se tornou um dos presidentes mais importantes do Brasil."
-            };
-
-            // Verificar se há resposta simulada
-            const perguntaLower = question.toLowerCase();
-            for (const [chave, resposta] of Object.entries(RESPOSTAS_SIMULADAS)) {
-                if (perguntaLower.includes(chave)) {
-                    return resposta;
-                }
-            }
-
-            // Verificar saudações
-            const saudacoes = ['oi', 'olá', 'bom dia', 'boa tarde', 'boa noite'];
-            if (saudacoes.some(s => perguntaLower.includes(s))) {
-                return "Olá! Como posso te ajudar hoje? 😄😄";
-            }
-
-            // Se não encontrar resposta simulada, usar a API OpenRouter
             try {
                 const prompt = {
                     "model": MODEL_NAME,
@@ -679,10 +506,11 @@
                         {
                             "role": "system",
                             "content": "Você é um especialista na Primeira República Brasileira (1889-1930). " +
-                                       "Responda de forma detalhada e histórica, com precisão de datas e fatos. " +
-                                       "Se não souber, diga que não tem informações suficientes." +
-                                       "Responda somente sobre a Primeira República Brasileira, não faça comparações com outros períodos ou países." +
-                                       "Se for sobre qualquer outro assunto, diga que você não é especialista nesse assunto."
+                                   "Responda de forma detalhada e histórica, com precisão de datas e fatos. " +
+                                   "Se não souber, diga que não tem informações suficientes. " +
+                                   "Responda somente sobre a Primeira República Brasileira, não faça comparações com outros períodos ou países. " +
+                                   "Se for sobre qualquer outro assunto, diga que você não é especialista nesse assunto. " +
+                                   "Se disserem oi, olá, bom dia, boa tarde ou boa noite, responda com uma saudação amigável."
                         },
                         {
                             "role": "user",
@@ -712,128 +540,8 @@
                 return data.choices[0].message.content;
             } catch (apiError) {
                 console.error('Erro na API:', apiError);
-                return "No momento, estou com dificuldades técnicas para responder. Aqui está uma informação básica sobre a Primeira República: " +
-                       "Foi o período de 1889 a 1930, marcado pela política do café-com-leite e várias revoltas como a Revolta da Vacina e a Guerra de Canudos. Aguarde um momento enquanto resolvo isso.";
+                return "Desculpe, estou tendo dificuldades para responder no momento. Por favor, tente novamente mais tarde.";
             }
-        }
-
-        function startQuiz() {
-            // Embaralhar perguntas e selecionar 5
-            const questions = [...QUIZ_QUESTIONS];
-            shuffleArray(questions);
-            const selectedQuestions = questions.slice(0, 5);
-            
-            // Configurar estado do quiz
-            quizState = {
-                active: true,
-                questions: selectedQuestions.slice(1),
-                currentQuestion: selectedQuestions[0],
-                correctAnswers: 0,
-                totalQuestions: 1
-            };
-            
-            // Mostrar primeira pergunta
-            const firstQuestion = selectedQuestions[0];
-            const quizMessage = `❓ ${firstQuestion.pergunta}\n(Digite 'sair' para finalizar o quiz)`;
-            
-            addMessage(quizMessage, false, true);
-            chatHistory[currentChatId].push({
-                content: quizMessage,
-                isUser: false,
-                isQuiz: true
-            });
-            
-            saveChatHistory();
-        }
-
-        function processQuizAnswer(answer) {
-            const currentQuestion = quizState.currentQuestion;
-            const correctAnswer = currentQuestion.resposta.toLowerCase();
-            const userAnswer = answer.toLowerCase();
-            
-            const isCorrect = userAnswer === correctAnswer;
-            let feedback = "";
-            
-            if (isCorrect) {
-                quizState.correctAnswers++;
-                feedback = `✅ Correto! A resposta é: ${currentQuestion.resposta}`;
-            } else {
-                feedback = `❌ Incorreto. A resposta correta é: ${currentQuestion.resposta}\nDica: ${currentQuestion.dica}`;
-            }
-            
-            // Adicionar feedback
-            addMessage(feedback, false, false, true, isCorrect);
-            chatHistory[currentChatId].push({
-                content: feedback,
-                isUser: false,
-                isFeedback: true,
-                isCorrect: isCorrect
-            });
-            
-            // Verificar se há mais perguntas
-            if (quizState.questions.length > 0) {
-                const nextQuestion = quizState.questions.shift();
-                quizState.currentQuestion = nextQuestion;
-                quizState.totalQuestions++;
-                
-                const nextMessage = `❓ ${nextQuestion.pergunta}\n(Digite 'sair' para finalizar o quiz)`;
-                
-                // Adicionar próxima pergunta
-                setTimeout(() => {
-                    addMessage(nextMessage, false, true);
-                    chatHistory[currentChatId].push({
-                        content: nextMessage,
-                        isUser: false,
-                        isQuiz: true
-                    });
-                    
-                    saveChatHistory();
-                }, 500);
-            } else {
-                // Finalizar quiz
-                setTimeout(() => {
-                    endQuiz();
-                }, 500);
-            }
-        }
-
-        function endQuiz() {
-            const correctAnswers = quizState.correctAnswers;
-            const totalQuestions = quizState.totalQuestions;
-            const score = totalQuestions > 0 ? (correctAnswers / totalQuestions) * 100 : 0;
-            
-            const resultsMessage = (
-                `🏁 Quiz finalizado! 🏁\n\n` +
-                `Você acertou ${correctAnswers} de ${totalQuestions} perguntas.\n` +
-                `Pontuação: ${Math.round(score)}%\n\n` +
-                `Obrigado por testar seus conhecimentos sobre a Primeira República!`
-            );
-            
-            // Adicionar resultados
-            addMessage(resultsMessage, false, false, false);
-            chatHistory[currentChatId].push({
-                content: resultsMessage,
-                isUser: false
-            });
-            
-            // Resetar estado do quiz
-            quizState = {
-                active: false,
-                questions: [],
-                currentQuestion: null,
-                correctAnswers: 0,
-                totalQuestions: 0
-            };
-            
-            saveChatHistory();
-        }
-
-        function shuffleArray(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
-            return array;
         }
     </script>
 </body>
