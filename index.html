@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Brasil República</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #0a1f3d;
+            --secondary-color: #5e7da9;
+            --accent-color:#f0e1dd;
+            --text-color: #e0e0e0;
+            --light-text: #a0a0a0;
+            --bg-color: #121212;
+            --chat-bg: #1e1e1e;
+            --sidebar-bg: #0f0f0f;
+            --user-message-bg:#292e35;
+            --bot-message-bg: #2d2d2d;
+            --input-bg: #252525;
+            --section-title: #2d5b99;
+            --correct-answer: #4CAF50;
+            --wrong-answer: #F44336;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .app-container {
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .lateral {
+            width: 260px;
+            background-color: var(--sidebar-bg);
+            border-right: 1px solid #333;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .lateral-header {
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 30px;
+            font-weight: 600;
+            color:#CCCCCC;
+        }
+
+        .logo-icon img {
+            font-size: 24px;
+            background-color: var(--accent-color);
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .new-chat-btn {
+            width: 100%;
+            padding: 10px;
+            border-radius: 6px;
+            background-color: var(--accent-color);
+            color: rgb(28, 24, 24);
+            font-weight: 500;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+        }
+
+        .new-chat-btn:hover {
+            background-color: #3c54a9;
+        }
+
+        .quiz-section {
+            margin-top: 30px;
+            padding: 15px;
+            background-color: var(--sidebar-bg);
+            border-radius: 8px;
+        }
+
+        .section-title {
+            color: var(--section-title);
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .start-quiz-btn {
+            width: 100%;
+            padding: 10px;
+            border-radius: 6px;
+            background-color: var(--secondary-color);
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+            margin-bottom: 15px;
+        }
+
+        .start-quiz-btn:hover {
+            background-color: #4a6b9b;
+        }
+
+        .quiz-instructions {
+            font-size: 13px;
+            color: var(--light-text);
+            line-height: 1.4;
+        }
+
+        .chat-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            max-height: 100vh;
+            background-color: var(--chat-bg);
+        }
+
+        .welcome-message {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .welcome-message h1{
+            font-size: 32px;
+            margin-bottom: 20px;
+            color: #ddf0df;
+        }
+
+        .welcome-message p {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #FFFFFF;
+        }
+
+        .chat-area {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%;
+            scrollbar-gutter: stable;
+            padding-right: 5px !important;
+        }
+
+        .message {
+            padding: 16px 24px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            max-width: 90%;
+            line-height: 1.6;
+            position: relative;
+        }
+
+        .user-message {
+            background-color: var(--user-message-bg);
+            margin-left: auto;
+            border-bottom-right-radius: 0;
+            color: white;
+        }
+
+        .bot-message {
+            background-color: var(--bot-message-bg);
+            margin-right: auto;
+            border-bottom-left-radius: 0;
+        }
+
+        .quiz-question {
+            background-color: #2d3748;
+            border-left: 4px solid var(--secondary-color);
+        }
+
+        .quiz-feedback {
+            background-color: #2d3748;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .correct-feedback {
+            background-color: rgba(76, 175, 80, 0.1);
+            border-left: 4px solid var(--correct-answer);
+        }
+
+        .wrong-feedback {
+            background-color: rgba(244, 67, 54, 0.1);
+            border-left: 4px solid var(--wrong-answer);
+        }
+
+        .quiz-results {
+            background-color: #2d3748;
+            border-left: 4px solid var(--primary-color);
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .input-container {
+            padding: 20px;
+            border-top: 1px solid #333;
+            background-color: var(--chat-bg);
+        }
+
+        .input-box {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            display: flex;
+        }
+
+        .input-box input {
+            width: 100%;
+            padding: 12px 50px 12px 20px;
+            border: 1px solid #3a3a3a;
+            border-radius: 24px;
+            font-size: 16px;
+            outline: none;
+            transition: all 0.2s;
+            background-color: var(--input-bg);
+            color: white;
+        }
+
+        .input-box input:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(45, 91, 153, 0.2);
+        }
+
+        .input-box button {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--accent-color);
+            cursor: pointer;
+            padding: 8px;
+        }
+
+        .disclaimer {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 12px;
+            color: var(--light-text);
+        }
+
+        .chat-area::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .chat-area::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .chat-area::-webkit-scrollbar-thumb {
+            background-color: #555;
+            border-radius: 3px;
+        }
+
+        .chat-area::-webkit-scrollbar-thumb:hover {
+            background-color: #777;
+        }
+
+        @media (max-width: 768px) {
+            .app-container {
+                flex-direction: column;
+            }
+            
+            .lateral {
+                width: 100%;
+                height: auto;
+                padding: 10px;
+                border-right: none;
+                border-bottom: 1px solid #333;
+            }
+            
+            .lateral-header {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin-bottom: 15px;
+            }
+            
+            .logo {
+                margin-bottom: 0;
+            }
+            
+            .new-chat-btn {
+                width: auto;
+                padding: 8px 12px;
+            }
+            
+            .chat-container {
+                max-height: calc(100vh - 120px);
+            }
+            
+            .welcome-message {
+                padding: 20px 10px;
+            }
+            
+            .welcome-message h1 {
+                font-size: 24px;
+            }
+            
+            .welcome-message p {
+                font-size: 16px;
+            }
+            
+            .chat-area {
+                padding: 10px;
+            }
+            
+            .message {
+                max-width: 85%;
+                padding: 12px 16px;
+                margin-bottom: 15px;
+            }
+            
+            .input-container {
+                padding: 15px 10px;
+            }
+            
+            .input-box {
+                max-width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .message {
+                max-width: 90%;
+                padding: 10px 12px;
+                font-size: 14px;
+            }
+            
+            .input-box input {
+                padding: 10px 40px 10px 15px;
+                font-size: 14px;
+            }
+            
+            .logo-icon {
+                width: 30px;
+                height: 30px;
+                font-size: 20px;
+            }
+            
+            .logo span {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <div class="lateral">
+            <div class="lateral-header">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZmlsbD0iI2YwZTFkZCIgZD0iTTE4LDhIMVYxMUgxOE0xOCwxM0gxVjE2SDE4TTIsNUgxOFYxOUgyVjVNMjAsM0g0QTIgMiAwIDAgMCwyLDVWMjFBMiAyIDAgMCAwLDQsMjNIMjBBMiAyIDAgMCAwLDIyLDIxVjVBMiAyIDAgMCAwLDIwLDNNMTksMTdIN1YxNUgxOVYxN00xOSwxMUg3VjlIMTlWMTEiLz48L3N2Zz4=" alt="Logo Brasil República">
+                    </div>
+                    <h3>Brasil República</h3>
+                </div>
+                <button class="new-chat-btn">Nova conversa 😄</button>
+            </div>
+            <div class="recent-chats">
+                <div class="section-title">Login</div>
+            </div>
+            <div class="quiz-section">
+                <button id="startQuizBtn" class="start-quiz-btn">Iniciar Quiz 🇧🇷</button>
+                <div class="quiz-instructions">
+                  
+                </div>
+            </div>
+        </div>
+        
+        <div class="chat-container">
+            <div class="chat-area" id="chatArea">
+                <div class="welcome-message">
+                    <h1>Bem-vindo ao IAtlas 🤖</h1>
+                    <p>Olá! Sou um Chatboot desenvolvido por Raifran, Eduarda e Maria de Fátima e sou especialista na Primeira República Brasileira (1889-1930)</p>
+                    <p>Como posso te ajudar hoje? 😄😄</p>
+                </div>
+            </div>
+            
+            <div class="input-container">
+                <div class="input-box">
+                    <input type="text" id="userInput" placeholder="Peça ao IAtlas...">
+                    <button id="sendButton">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="22" y1="2" x2="11" y2="13"></line>
+                            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                        </svg>
+                    </button>
+                </div>
+                <div class="disclaimer"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Configurações da API OpenRouter
+        const OPENROUTER_API_KEY = "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";
+        const OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions";
+        const MODEL_NAME = "deepseek/deepseek-chat";
+
+        // Perguntas do quiz
+        const QUIZ_QUESTIONS = [
+            {
+                "pergunta": "Quem foi o primeiro presidente da República Brasileira?",
+                "resposta": "Marechal Deodoro da Fonseca",
+                "dica": "Foi o líder do golpe que instaurou a República em 1889."
+            },
+            {
+                "pergunta": "O que foi a Política dos Governadores?",
+                "resposta": "Um acordo entre o governo federal e as oligarquias estaduais",
+                "dica": "Era uma troca de apoio político entre o presidente e os governadores."
+            },
+            {
+                "pergunta": "Em que ano ocorreu a Revolta da Vacina?",
+                "resposta": "1904",
+                "dica": "Foi durante o governo de Rodrigues Alves."
+            },
+            {
+                "pergunta": "Qual foi o principal produto de exportação do Brasil durante a Primeira República?",
+                "resposta": "Café",
+                "dica": "Era cultivado principalmente em São Paulo e Minas Gerais."
+            },
+            {
+                "pergunta": "Como ficou conhecido o sistema político da Primeira República?",
+                "resposta": "Política do Café com Leite",
+                "dica": "Referia-se à alternância de poder entre políticos de dois estados."
+            },
+            {
+                "pergunta": "Qual foi a principal revolta ocorrida no sertão nordestino?",
+                "resposta": "Guerra de Canudos",
+                "dica": "Foi liderada por Antônio Conselheiro."
+            },
+            {
+                "pergunta": "Quem foi o presidente durante a Primeira Guerra Mundial?",
+                "resposta": "Venceslau Brás",
+                "dica": "Seu governo ocorreu entre 1914 e 1918."
+            },
+            {
+                "pergunta": "Qual movimento militar marcou o fim da Primeira República?",
+                "resposta": "Revolução de 1930",
+                "dica": "Foi liderada por Getúlio Vargas."
+            }
+        ];
+
+        // Estado da aplicação
+        let currentChatId = null;
+        let chatHistory = {};
+        let quizState = {
+            active: false,
+            questions: [],
+            currentQuestion: null,
+            correctAnswers: 0,
+            totalQuestions: 0
+        };
+
+        // Elementos do DOM
+        const chatArea = document.getElementById('chatArea');
+        const userInput = document.getElementById('userInput');
+        const sendButton = document.getElementById('sendButton');
+        const newChatBtn = document.querySelector('.new-chat-btn');
+        const startQuizBtn = document.getElementById('startQuizBtn');
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', () => {
+            loadChatHistory();
+            setupEventListeners();
+        });
+
+        function loadChatHistory() {
+            const savedHistory = localStorage.getItem('chatHistory');
+            if (savedHistory) {
+                chatHistory = JSON.parse(savedHistory);
+            }
+
+            const savedCurrentChat = localStorage.getItem('currentChatId');
+            if (savedCurrentChat && chatHistory[savedCurrentChat]) {
+                currentChatId = savedCurrentChat;
+                displayChatMessages(currentChatId);
+            } else {
+                createNewChat();
+            }
+        }
+
+        function saveChatHistory() {
+            localStorage.setItem('chatHistory', JSON.stringify(chatHistory));
+            localStorage.setItem('currentChatId', currentChatId);
+        }
+
+        function createNewChat() {
+            currentChatId = `chat_${Date.now()}`;
+            chatHistory[currentChatId] = [];
+            saveChatHistory();
+            
+            // Mostrar mensagem de boas-vindas
+            chatArea.innerHTML = `
+                <div class="welcome-message">
+                    <h1>Bem-vindo ao IAtlas 🤖</h1>
+                    <p>Olá! Sou um Chatboot desenvolvido por Raifran, Eduarda e Maria de Fátima e sou especialista na Primeira República Brasileira (1889-1930)</p>
+                    <p>Como posso te ajudar hoje? 😄😄</p>
+                </div>
+            `;
+            
+            userInput.value = '';
+            userInput.focus();
+        }
+
+        function displayChatMessages(chatId) {
+            const messages = chatHistory[chatId] || [];
+            
+            if (messages.length === 0) {
+                chatArea.innerHTML = `
+                    <div class="welcome-message">
+                        <h1>Bem-vindo ao IAtlas 🤖</h1>
+                        <p>Olá! Sou um Chatboot desenvolvido por Raifran, Eduarda e Maria de Fátima e sou especialista na Primeira República Brasileira (1889-1930)</p>
+                        <p>Como posso te ajudar hoje? 😄😄</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            chatArea.innerHTML = '';
+            messages.forEach(message => {
+                addMessage(message.content, message.isUser, message.isQuiz, message.isFeedback, message.isCorrect);
+            });
+        }
+
+        function addMessage(text, isUser, isQuiz = false, isFeedback = false, isCorrect = null) {
+            const messageDiv = document.createElement('div');
+            
+            // Determinar as classes CSS com base no tipo de mensagem
+            let messageClasses = ['message'];
+            
+            if (isUser) {
+                messageClasses.push('user-message');
+            } else {
+                messageClasses.push('bot-message');
+            }
+            
+            if (isQuiz) {
+                messageClasses.push('quiz-question');
+            }
+            
+            if (isFeedback) {
+                messageClasses.push('quiz-feedback');
+                if (isCorrect !== null) {
+                    messageClasses.push(isCorrect ? 'correct-feedback' : 'wrong-feedback');
+                }
+            }
+            
+            messageDiv.className = messageClasses.join(' ');
+            
+            // Formatar o texto (preservar quebras de linha)
+            const formattedText = text.replace(/\n/g, '<br>');
+            messageDiv.innerHTML = formattedText;
+            
+            chatArea.appendChild(messageDiv);
+            chatArea.scrollTop = chatArea.scrollHeight;
+        }
+
+        function setupEventListeners() {
+            // Enviar mensagem ao clicar no botão
+            sendButton.addEventListener('click', sendMessage);
+            
+            // Enviar mensagem ao pressionar Enter
+            userInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') sendMessage();
+            });
+            
+            // Nova conversa
+            newChatBtn.addEventListener('click', () => {
+                createNewChat();
+            });
+            
+            // Iniciar quiz
+            startQuizBtn.addEventListener('click', startQuiz);
+        }
+
+        async function sendMessage() {
+            const question = userInput.value.trim();
+            if (!question) return;
+
+            // Adicionar mensagem do usuário ao chat
+            addMessage(question, true);
+            chatHistory[currentChatId].push({
+                content: question,
+                isUser: true,
+                isQuiz: quizState.active
+            });
+            
+            userInput.value = '';
+            userInput.focus();
+            
+            // Verificar se está no modo quiz
+            if (quizState.active) {
+                if (question.toLowerCase() === 'sair') {
+                    endQuiz();
+                    return;
+                }
+                
+                processQuizAnswer(question);
+                return;
+            }
+            
+            // Processar resposta normal
+            try {
+                const resposta = await getAIResponse(question);
+                
+                // Adicionar resposta ao chat
+                addMessage(resposta, false);
+                chatHistory[currentChatId].push({
+                    content: resposta,
+                    isUser: false
+                });
+                
+                saveChatHistory();
+            } catch (error) {
+                console.error('Erro:', error);
+                addMessage('Desculpe, ocorreu um erro ao processar sua pergunta sobre a Primeira República.', false);
+            }
+        }
+
+        async function getAIResponse(question) {
+            // Respostas simuladas para perguntas comuns
+            const RESPOSTAS_SIMULADAS = {
+                "quem foi o primeiro presidente": "O primeiro presidente da República Brasileira foi Marechal Deodoro da Fonseca (1889-1891), que liderou o golpe que instaurou a República.",
+                "o que foi a política dos governadores": "A Política dos Governadores foi um acordo entre o governo federal e as oligarquias estaduais durante a República Velha, onde o governo federal apoiava os governadores estaduais que, em troca, garantiam apoio no Congresso.",
+                "o que foi a revolta da vacina": "A Revolta da Vacina (1904) foi uma revolta popular no Rio de Janeiro contra a obrigatoriedade da vacinação contra a varíola, implementada por Oswaldo Cruz durante o governo Rodrigues Alves.",
+                "quem foi getúlio vargas": "Getúlio Vargas assumiu o poder em 1930, marcando o fim da Primeira República. Durante o período de 1889-1930, ele não era uma figura central, mas posteriormente se tornou um dos presidentes mais importantes do Brasil."
+            };
+
+            // Verificar se há resposta simulada
+            const perguntaLower = question.toLowerCase();
+            for (const [chave, resposta] of Object.entries(RESPOSTAS_SIMULADAS)) {
+                if (perguntaLower.includes(chave)) {
+                    return resposta;
+                }
+            }
+
+            // Verificar saudações
+            const saudacoes = ['oi', 'olá', 'bom dia', 'boa tarde', 'boa noite'];
+            if (saudacoes.some(s => perguntaLower.includes(s))) {
+                return "Olá! Como posso te ajudar hoje? 😄😄";
+            }
+
+            // Se não encontrar resposta simulada, usar a API OpenRouter
+            try {
+                const prompt = {
+                    "model": MODEL_NAME,
+                    "messages": [
+                        {
+                            "role": "system",
+                            "content": "Você é um especialista na Primeira República Brasileira (1889-1930). " +
+                                       "Responda de forma detalhada e histórica, com precisão de datas e fatos. " +
+                                       "Se não souber, diga que não tem informações suficientes." +
+                                       "Responda somente sobre a Primeira República Brasileira, não faça comparações com outros períodos ou países." +
+                                       "Se for sobre qualquer outro assunto, diga que você não é especialista nesse assunto."
+                        },
+                        {
+                            "role": "user",
+                            "content": question
+                        }
+                    ],
+                    "temperature": 0.7,
+                    "max_tokens": 500
+                };
+
+                const response = await fetch(OPENROUTER_API_URL, {
+                    method: 'POST',
+                    headers: {
+                        "Authorization": `Bearer ${OPENROUTER_API_KEY}`,
+                        "Content-Type": "application/json",
+                        "HTTP-Referer": window.location.href,
+                        "X-Title": "Brasil República"
+                    },
+                    body: JSON.stringify(prompt)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Erro na API: ${response.status}`);
+                }
+
+                const data = await response.json();
+                return data.choices[0].message.content;
+            } catch (apiError) {
+                console.error('Erro na API:', apiError);
+                return "No momento, estou com dificuldades técnicas para responder. Aqui está uma informação básica sobre a Primeira República: " +
+                       "Foi o período de 1889 a 1930, marcado pela política do café-com-leite e várias revoltas como a Revolta da Vacina e a Guerra de Canudos. Aguarde um momento enquanto resolvo isso.";
+            }
+        }
+
+        function startQuiz() {
+            // Embaralhar perguntas e selecionar 5
+            const questions = [...QUIZ_QUESTIONS];
+            shuffleArray(questions);
+            const selectedQuestions = questions.slice(0, 5);
+            
+            // Configurar estado do quiz
+            quizState = {
+                active: true,
+                questions: selectedQuestions.slice(1),
+                currentQuestion: selectedQuestions[0],
+                correctAnswers: 0,
+                totalQuestions: 1
+            };
+            
+            // Mostrar primeira pergunta
+            const firstQuestion = selectedQuestions[0];
+            const quizMessage = `❓ ${firstQuestion.pergunta}\n(Digite 'sair' para finalizar o quiz)`;
+            
+            addMessage(quizMessage, false, true);
+            chatHistory[currentChatId].push({
+                content: quizMessage,
+                isUser: false,
+                isQuiz: true
+            });
+            
+            saveChatHistory();
+        }
+
+        function processQuizAnswer(answer) {
+            const currentQuestion = quizState.currentQuestion;
+            const correctAnswer = currentQuestion.resposta.toLowerCase();
+            const userAnswer = answer.toLowerCase();
+            
+            const isCorrect = userAnswer === correctAnswer;
+            let feedback = "";
+            
+            if (isCorrect) {
+                quizState.correctAnswers++;
+                feedback = `✅ Correto! A resposta é: ${currentQuestion.resposta}`;
+            } else {
+                feedback = `❌ Incorreto. A resposta correta é: ${currentQuestion.resposta}\nDica: ${currentQuestion.dica}`;
+            }
+            
+            // Adicionar feedback
+            addMessage(feedback, false, false, true, isCorrect);
+            chatHistory[currentChatId].push({
+                content: feedback,
+                isUser: false,
+                isFeedback: true,
+                isCorrect: isCorrect
+            });
+            
+            // Verificar se há mais perguntas
+            if (quizState.questions.length > 0) {
+                const nextQuestion = quizState.questions.shift();
+                quizState.currentQuestion = nextQuestion;
+                quizState.totalQuestions++;
+                
+                const nextMessage = `❓ ${nextQuestion.pergunta}\n(Digite 'sair' para finalizar o quiz)`;
+                
+                // Adicionar próxima pergunta
+                setTimeout(() => {
+                    addMessage(nextMessage, false, true);
+                    chatHistory[currentChatId].push({
+                        content: nextMessage,
+                        isUser: false,
+                        isQuiz: true
+                    });
+                    
+                    saveChatHistory();
+                }, 500);
+            } else {
+                // Finalizar quiz
+                setTimeout(() => {
+                    endQuiz();
+                }, 500);
+            }
+        }
+
+        function endQuiz() {
+            const correctAnswers = quizState.correctAnswers;
+            const totalQuestions = quizState.totalQuestions;
+            const score = totalQuestions > 0 ? (correctAnswers / totalQuestions) * 100 : 0;
+            
+            const resultsMessage = (
+                `🏁 Quiz finalizado! 🏁\n\n` +
+                `Você acertou ${correctAnswers} de ${totalQuestions} perguntas.\n` +
+                `Pontuação: ${Math.round(score)}%\n\n` +
+                `Obrigado por testar seus conhecimentos sobre a Primeira República!`
+            );
+            
+            // Adicionar resultados
+            addMessage(resultsMessage, false, false, false);
+            chatHistory[currentChatId].push({
+                content: resultsMessage,
+                isUser: false
+            });
+            
+            // Resetar estado do quiz
+            quizState = {
+                active: false,
+                questions: [],
+                currentQuestion: null,
+                correctAnswers: 0,
+                totalQuestions: 0
+            };
+            
+            saveChatHistory();
+        }
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+    </script>
+</body>
+</html>
