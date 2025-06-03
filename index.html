@@ -542,7 +542,7 @@
 
     <script>
         // Configurações da API OpenRouter
-        const OPENROUTER_API_KEY = "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";
+        const OPENROUTER_API_KEY = "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"; // Substitua por sua nova chave válida
         const OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions";
         const MODEL_NAME = "deepseek/deepseek-chat";
 
@@ -908,9 +908,19 @@
             userInput.value = '';
             userInput.focus();
             
+            // Mostrar mensagem de "digitando..."
+            const typingIndicator = document.createElement('div');
+            typingIndicator.className = 'message bot-message';
+            typingIndicator.textContent = 'Digitando...';
+            chatArea.appendChild(typingIndicator);
+            chatArea.scrollTop = chatArea.scrollHeight;
+            
             // Processar resposta
             try {
                 const resposta = await getAIResponse(question);
+                
+                // Remover o indicador de "digitando"
+                chatArea.removeChild(typingIndicator);
                 
                 // Adicionar resposta ao chat
                 addMessage(resposta, false);
@@ -922,7 +932,10 @@
                 saveChatHistory();
             } catch (error) {
                 console.error('Erro:', error);
-                addMessage('Desculpe, ocorreu um erro ao processar sua pergunta sobre a Primeira República.', false);
+                // Remover o indicador de "digitando"
+                chatArea.removeChild(typingIndicator);
+                
+                addMessage('Desculpe, ocorreu um erro ao processar sua pergunta sobre a Primeira República. Por favor, verifique sua conexão com a internet e tente novamente.', false);
             }
         }
 
@@ -942,7 +955,7 @@
                                     "Se perguntarem sobre a Primeira República Brasileira, responda com informações detalhadas e relevantes."+
                                     "Se perguntarem sobre a história do Brasil, responda com informações detalhadas e relevantes sobre a Primeira República Brasileira."+
                                     "Induza as pessoas nas respostas a fazer perguntas sobre a Primeira República Brasileira, " +
-                                    "Não responda perguntas sobre outros assuntos, apenas sobre a Primeira República Brasileira. " 
+                                    "Não responda perguntas sobre outros assuntos, apenas sobre a Primeira República Brasileira."
                         },
                         {
                             "role": "user",
@@ -965,14 +978,19 @@
                 });
 
                 if (!response.ok) {
-                    throw new Error(`Erro na API: ${response.status}`);
+                    throw new Error(`Erro na API: ${response.status} - ${response.statusText}`);
                 }
 
                 const data = await response.json();
+                
+                if (!data.choices || !data.choices[0] || !data.choices[0].message) {
+                    throw new Error('Resposta da API em formato inesperado');
+                }
+                
                 return data.choices[0].message.content;
             } catch (apiError) {
                 console.error('Erro na API:', apiError);
-                return "Desculpe, estou tendo dificuldades para responder no momento. Por favor, tente novamente mais tarde.";
+                return "Desculpe, estou tendo dificuldades para responder no momento. Por favor, verifique sua chave de API e tente novamente mais tarde.";
             }
         }
     </script>
