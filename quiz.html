@@ -27,94 +27,81 @@
             font-family: 'Poppins', sans-serif;
             line-height: 1.6;
             color: var(--text-color);
+            padding: 20px;
         }
 
         header {
             background-color: var(--primary-color);
             color: var(--text-light);
-            padding: 20px 0;
+            padding: 15px 0;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
         }
 
         .container {
             width: 90%;
-            max-width: 1200px;
+            max-width: 600px;
             margin: 0 auto;
-            padding: 0 20px;
         }
 
         .logo {
             display: flex;
             align-items: center;
-            gap: 15px;
+            justify-content: center;
+            gap: 10px;
         }
 
         .logo img {
-            height: 40px;
+            height: 30px;
         }
 
         .logo h1 {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             font-weight: 700;
-        }
-
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: 20px;
-        }
-
-        nav a {
-            color: var(--text-light);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-
-        nav a:hover, nav a.active {
-            color: var(--secondary-color);
         }
 
         .quiz-container {
             background: #f9f9f9;
-            border-radius: 10px;
-            padding: 30px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            max-width: 800px;
-            margin: 30px auto;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 0 8px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
         }
         
         .quiz-title {
             color: var(--primary-color);
             text-align: center;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
+            font-size: 1.5rem;
         }
         
         .quiz-subtitle {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
+            font-size: 1rem;
         }
         
         .question {
-            font-size: 1.2em;
-            margin-bottom: 20px;
+            font-size: 1.1em;
+            margin-bottom: 15px;
             font-weight: bold;
         }
         
         .options {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 10px;
-            margin-bottom: 30px;
+            gap: 8px;
+            margin-bottom: 20px;
         }
         
         .option {
-            padding: 12px;
+            padding: 10px;
             background: #fff;
-            border: 2px solid #ddd;
+            border: 1px solid #ddd;
             border-radius: 5px;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.2s;
+            font-size: 0.9em;
         }
         
         .option:hover {
@@ -137,9 +124,10 @@
         }
         
         .feedback {
-            padding: 15px;
+            padding: 12px;
             border-radius: 5px;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
+            font-size: 0.9em;
             display: none;
         }
         
@@ -162,13 +150,13 @@
         }
         
         button {
-            padding: 10px 20px;
+            padding: 8px 16px;
             background: #3498db;
             color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            font-size: 1em;
+            font-size: 0.9em;
         }
         
         button:disabled {
@@ -178,17 +166,31 @@
         
         .progress {
             font-weight: bold;
+            font-size: 0.9em;
+        }
+
+        .back-button {
+            display: block;
+            width: 100%;
+            max-width: 200px;
+            margin: 0 auto;
+            padding: 10px;
+            background: var(--primary-color);
+            color: white;
+            text-align: center;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 0.9em;
         }
 
         @media (max-width: 768px) {
-            header .container {
-                flex-direction: column;
-                text-align: center;
-                gap: 20px;
+            .container {
+                width: 95%;
+                padding: 0 10px;
             }
             
-            nav ul {
-                justify-content: center;
+            .quiz-container {
+                padding: 15px;
             }
         }
     </style>
@@ -198,16 +200,8 @@
         <div class="container">
             <div class="logo">
                 <img src="images/cafe.png" alt="Primeira República">
-                <h1> IAtlas Primeira República</h1>
+                <h1>Primeira República</h1>
             </div>
-            <nav>
-                <ul>
-                    <li><a href="index.html">Voltar</a></li>
-                    
-                   
-                    
-                </ul>
-            </nav>
         </div>
     </header>
 
@@ -231,6 +225,8 @@
                 <button id="nextBtn">Próxima</button>
             </div>
         </div>
+        
+        <a href="index.html" class="back-button">Voltar</a>
     </main>
 
     <script>
