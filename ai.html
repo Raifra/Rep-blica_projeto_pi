@@ -25,6 +25,22 @@
             --wrong-answer: #F44336;
         }
 
+        /* Tema claro */
+        .light-mode {
+            --primary-color: #1a365d;
+            --secondary-color: #4299e1;
+            --accent-color: #2b6cb0;
+            --text-color: #2d3748;
+            --light-text: #4a5568;
+            --bg-color: #f7fafc;
+            --chat-bg: #ffffff;
+            --sidebar-bg: #edf2f7;
+            --user-message-bg: #ebf8ff;
+            --bot-message-bg: #f7fafc;
+            --input-bg: #ffffff;
+            --section-title: #2b6cb0;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -36,6 +52,7 @@
             background-color: var(--bg-color);
             color: var(--text-color);
             line-height: 1.6;
+            transition: background-color 0.3s, color 0.3s;
         }
 
         .app-container {
@@ -51,6 +68,7 @@
             padding: 15px;
             display: flex;
             flex-direction: column;
+            transition: background-color 0.3s;
         }
 
         .lateral-header {
@@ -63,7 +81,7 @@
             gap: 10px;
             margin-bottom: 30px;
             font-weight: 600;
-            color:#CCCCCC;
+            color: var(--text-color);
         }
 
         .logo-icon img {
@@ -78,8 +96,14 @@
             justify-content: center;
         }
 
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
         .new-chat-btn {
-            width: 100%;
+            flex: 1;
             padding: 10px;
             border-radius: 6px;
             background-color: var(--accent-color);
@@ -88,10 +112,50 @@
             cursor: pointer;
             border: none;
             transition: all 0.2s;
-            margin-bottom: 15px;
+        }
+
+        .theme-toggle-btn {
+            width: 40px;
+            padding: 10px;
+            border-radius: 6px;
+            background-color: var(--secondary-color);
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .news-btn {
+            width: 100%;
+            padding: 10px;
+            border-radius: 6px;
+            background-color: var(--secondary-color);
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+            margin-bottom: 15px;
+        }
+
+        .history-btn {
+            width: 100%;
+            padding: 10px;
+            border-radius: 6px;
+            background-color: var(--secondary-color);
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+            margin-bottom: 15px;
+        }
+
+        .home-btn {
             width: 100%;
             padding: 10px;
             border-radius: 6px;
@@ -108,7 +172,19 @@
             background-color: #3c54a9;
         }
 
+        .theme-toggle-btn:hover {
+            background-color: #4a6da3;
+        }
+
         .news-btn:hover {
+            background-color: #4a6da3;
+        }
+
+        .history-btn:hover {
+            background-color: #4a6da3;
+        }
+
+        .home-btn:hover {
             background-color: #4a6da3;
         }
 
@@ -118,6 +194,7 @@
             flex-direction: column;
             max-height: 100vh;
             background-color: var(--chat-bg);
+            transition: background-color 0.3s;
         }
 
         .welcome-message {
@@ -130,13 +207,13 @@
         .welcome-message h1{
             font-size: 32px;
             margin-bottom: 20px;
-            color: #ddf0df;
+            color: var(--accent-color);
         }
 
         .welcome-message p {
             font-size: 18px;
             margin-bottom: 10px;
-            color: #FFFFFF;
+            color: var(--text-color);
         }
 
         .chat-area {
@@ -157,13 +234,14 @@
             max-width: 90%;
             line-height: 1.6;
             position: relative;
+            transition: background-color 0.3s;
         }
 
         .user-message {
             background-color: var(--user-message-bg);
             margin-left: auto;
             border-bottom-right-radius: 0;
-            color: white;
+            color: var(--text-color);
         }
 
         .bot-message {
@@ -176,6 +254,7 @@
             padding: 20px;
             border-top: 1px solid #333;
             background-color: var(--chat-bg);
+            transition: background-color 0.3s;
         }
 
         .input-box {
@@ -194,7 +273,7 @@
             outline: none;
             transition: all 0.2s;
             background-color: var(--input-bg);
-            color: white;
+            color: var(--text-color);
         }
 
         .input-box input:focus {
@@ -260,7 +339,7 @@
 
         .news-header h1 {
             font-size: 32px;
-            color: #ddf0df;
+            color: var(--accent-color);
             margin-bottom: 10px;
         }
 
@@ -283,6 +362,7 @@
             cursor: pointer;
             transition: transform 0.2s;
             text-align: center;
+            border: 1px solid rgba(0,0,0,0.1);
         }
 
         .newspaper-card:hover {
@@ -314,6 +394,7 @@
             border-radius: 8px;
             padding: 25px;
             margin-top: 20px;
+            border: 1px solid rgba(0,0,0,0.1);
         }
 
         .news-article.active {
@@ -374,6 +455,135 @@
             font-style: italic;
         }
 
+        /* Estilos para a seção de histórico */
+        .history-container {
+            display: none;
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .history-container.active {
+            display: block;
+        }
+
+        .history-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .history-header h1 {
+            font-size: 32px;
+            color: var(--accent-color);
+            margin-bottom: 10px;
+        }
+
+        .history-header p {
+            font-size: 16px;
+            color: var(--light-text);
+        }
+
+        .history-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .history-item {
+            background-color: var(--bot-message-bg);
+            border-radius: 8px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .history-item:hover {
+            background-color: var(--user-message-bg);
+        }
+
+        .history-item h3 {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .history-item p {
+            font-size: 12px;
+            color: var(--light-text);
+        }
+
+        .clear-history-btn {
+            width: 100%;
+            padding: 10px;
+            border-radius: 6px;
+            background-color: #f44336;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+            margin-top: 20px;
+        }
+
+        .clear-history-btn:hover {
+            background-color: #d32f2f;
+        }
+
+        .confirmation-dialog {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .confirmation-content {
+            background-color: var(--chat-bg);
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .confirmation-content h3 {
+            margin-bottom: 15px;
+            color: var(--text-color);
+        }
+
+        .confirmation-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .confirmation-buttons button {
+            padding: 8px 15px;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .confirm-btn {
+            background-color: #f44336;
+            color: white;
+        }
+
+        .cancel-btn {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
         @media (max-width: 768px) {
             .app-container {
                 flex-direction: column;
@@ -398,9 +608,18 @@
                 margin-bottom: 0;
             }
             
-            .new-chat-btn, .news-btn {
-                width: auto;
+            .button-group {
+                flex-direction: column;
+            }
+            
+            .new-chat-btn, .news-btn, .history-btn, .home-btn {
+                width: 100%;
                 padding: 8px 12px;
+                margin-bottom: 10px;
+            }
+            
+            .theme-toggle-btn {
+                width: 100%;
                 margin-bottom: 10px;
             }
             
@@ -493,8 +712,13 @@
                     </div>
                     <h3>Brasil República</h3>
                 </div>
-                <button class="new-chat-btn">Nova conversa 😄</button>
+                <div class="button-group">
+                    <button class="new-chat-btn">Nova conversa 😄</button>
+                    <button class="theme-toggle-btn">🌓</button>
+                </div>
                 <button class="news-btn">Jornais 📰</button>
+                <button class="history-btn">Histórico 🕰️</button>
+                <button class="home-btn" onclick="window.location.href='index.html'">Voltar para Home 🏠</button>
             </div>
             
         </div>
@@ -525,6 +749,20 @@
                 </div>
             </div>
             
+            <!-- Área de histórico (oculta por padrão) -->
+            <div class="history-container" id="historyContainer">
+                <div class="history-header">
+                    <h1>Histórico de Conversas</h1>
+                    <p>Seus diálogos anteriores com o IAtlas</p>
+                </div>
+                
+                <div class="history-list" id="historyList">
+                    <!-- Histórico será preenchido dinamicamente -->
+                </div>
+                
+                <button class="clear-history-btn" id="clearHistoryBtn">Limpar Histórico</button>
+            </div>
+            
             <div class="input-container">
                 <div class="input-box">
                     <input type="text" id="userInput" placeholder="Peça ao IAtlas...">
@@ -540,26 +778,47 @@
         </div>
     </div>
 
+    <!-- Diálogo de confirmação para limpar histórico -->
+    <div class="confirmation-dialog" id="confirmationDialog">
+        <div class="confirmation-content">
+            <h3>Tem certeza que deseja apagar todo o histórico de conversas?</h3>
+            <p>Esta ação não pode ser desfeita.</p>
+            <div class="confirmation-buttons">
+                <button class="confirm-btn" id="confirmClearBtn">Apagar</button>
+                <button class="cancel-btn" id="cancelClearBtn">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         // Configurações da API OpenRouter
-        const OPENROUTER_API_KEY = "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"; // Substitua por sua nova chave válida
+        const OPENROUTER_API_KEY = "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"; // Substitua por sua nova chave válida
         const OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions";
         const MODEL_NAME = "deepseek/deepseek-chat";
 
         // Estado da aplicação
         let currentChatId = null;
         let chatHistory = {};
-        let currentView = 'chat'; // 'chat' ou 'news'
+        let currentView = 'chat'; // 'chat', 'news' ou 'history'
+        let isLightMode = false;
 
         // Elementos do DOM
         const chatArea = document.getElementById('chatArea');
         const newsContainer = document.getElementById('newsContainer');
         const newspapersGrid = document.getElementById('newspapersGrid');
         const newsArticle = document.getElementById('newsArticle');
+        const historyContainer = document.getElementById('historyContainer');
+        const historyList = document.getElementById('historyList');
         const userInput = document.getElementById('userInput');
         const sendButton = document.getElementById('sendButton');
         const newChatBtn = document.querySelector('.new-chat-btn');
         const newsBtn = document.querySelector('.news-btn');
+        const historyBtn = document.querySelector('.history-btn');
+        const themeToggleBtn = document.querySelector('.theme-toggle-btn');
+        const clearHistoryBtn = document.getElementById('clearHistoryBtn');
+        const confirmationDialog = document.getElementById('confirmationDialog');
+        const confirmClearBtn = document.getElementById('confirmClearBtn');
+        const cancelClearBtn = document.getElementById('cancelClearBtn');
 
         // Dados dos jornais e notícias
         const newspapers = [
@@ -678,6 +937,7 @@
             loadChatHistory();
             setupEventListeners();
             renderNewspapers();
+            checkThemePreference();
         });
 
         function loadChatHistory() {
@@ -692,6 +952,13 @@
                 displayChatMessages(currentChatId);
             } else {
                 createNewChat();
+            }
+
+            // Carregar preferência de tema
+            const savedTheme = localStorage.getItem('isLightMode');
+            if (savedTheme) {
+                isLightMode = savedTheme === 'true';
+                updateTheme();
             }
         }
 
@@ -779,25 +1046,50 @@
             newsBtn.addEventListener('click', () => {
                 switchView('news');
             });
+            
+            // Botão de histórico
+            historyBtn.addEventListener('click', () => {
+                renderHistoryList();
+                switchView('history');
+            });
+            
+            // Botão de alternar tema
+            themeToggleBtn.addEventListener('click', toggleTheme);
+            
+            // Botão de limpar histórico
+            clearHistoryBtn.addEventListener('click', () => {
+                confirmationDialog.style.display = 'flex';
+            });
+            
+            // Botões do diálogo de confirmação
+            confirmClearBtn.addEventListener('click', clearHistory);
+            cancelClearBtn.addEventListener('click', () => {
+                confirmationDialog.style.display = 'none';
+            });
         }
 
         function switchView(view) {
             currentView = view;
             
+            // Esconder todas as views primeiro
+            chatArea.style.display = 'none';
+            newsContainer.style.display = 'none';
+            historyContainer.style.display = 'none';
+            userInput.style.display = 'none';
+            document.querySelector('.input-box').style.display = 'none';
+            
             if (view === 'chat') {
                 chatArea.style.display = 'block';
-                newsContainer.style.display = 'none';
                 userInput.style.display = 'block';
                 document.querySelector('.input-box').style.display = 'flex';
             } else if (view === 'news') {
-                chatArea.style.display = 'none';
                 newsContainer.style.display = 'block';
-                userInput.style.display = 'none';
-                document.querySelector('.input-box').style.display = 'none';
                 
                 // Mostrar a lista de jornais (esconder artigo se estiver visível)
                 newspapersGrid.style.display = 'grid';
                 newsArticle.style.display = 'none';
+            } else if (view === 'history') {
+                historyContainer.style.display = 'block';
             }
         }
 
@@ -894,6 +1186,74 @@
             newsArticle.appendChild(articleContent);
         }
 
+        function renderHistoryList() {
+            historyList.innerHTML = '';
+            
+            if (!chatHistory || Object.keys(chatHistory).length === 0) {
+                historyList.innerHTML = '<p>Nenhuma conversa no histórico.</p>';
+                return;
+            }
+            
+            Object.keys(chatHistory).forEach(chatId => {
+                const chat = chatHistory[chatId];
+                if (chat.length === 0) return;
+                
+                const firstMessage = chat[0].content;
+                const date = new Date(parseInt(chatId.split('_')[1]));
+                
+                const historyItem = document.createElement('div');
+                historyItem.className = 'history-item';
+                historyItem.dataset.chatId = chatId;
+                
+                historyItem.innerHTML = `
+                    <h3>${firstMessage.length > 50 ? firstMessage.substring(0, 50) + '...' : firstMessage}</h3>
+                    <p>${date.toLocaleDateString()} - ${date.toLocaleTimeString()}</p>
+                `;
+                
+                historyItem.addEventListener('click', () => {
+                    currentChatId = chatId;
+                    displayChatMessages(chatId);
+                    switchView('chat');
+                });
+                
+                historyList.appendChild(historyItem);
+            });
+        }
+
+        function clearHistory() {
+            chatHistory = {};
+            currentChatId = null;
+            localStorage.removeItem('chatHistory');
+            localStorage.removeItem('currentChatId');
+            createNewChat();
+            renderHistoryList();
+            confirmationDialog.style.display = 'none';
+        }
+
+        function toggleTheme() {
+            isLightMode = !isLightMode;
+            localStorage.setItem('isLightMode', isLightMode);
+            updateTheme();
+        }
+
+        function checkThemePreference() {
+            const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+            if (localStorage.getItem('isLightMode') === null && prefersLight) {
+                isLightMode = true;
+                updateTheme();
+            }
+        }
+
+        function updateTheme() {
+            if (isLightMode) {
+                document.body.classList.add('light-mode');
+                themeToggleBtn.textContent = '🌙';
+            } else {
+                document.body.classList.remove('light-mode');
+                themeToggleBtn.textContent = '🌓';
+            }
+        }
+
         async function sendMessage() {
             const question = userInput.value.trim();
             if (!question) return;
@@ -963,7 +1323,7 @@
                         }
                     ],
                     "temperature": 0.7,
-                    "max_tokens": 200
+                    "max_tokens": 1000 // Aumentei o número de tokens para respostas mais completas
                 };
 
                 const response = await fetch(OPENROUTER_API_URL, {
