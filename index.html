@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Primeira República Brasileira</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.85em%22 x=%2250%22 font-size=%2285%22 text-anchor=%22middle%22>☕</text></svg>">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <img src="images/flor.jpg" alt="Primeira República" style="width: 60px; height: 60px; object-fit: cover; border-radius: 50%;">
+                <h1> IAtlas Primeira República</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html" class="active">Home</a></li>
+                    <li><a href="#sobre">Sobre</a></li>
+                    <li><a href="#recursos">Recursos</a></li>
+                    <li><a href="#contato">Contato</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h2>A Primeira República Brasileira (1889-1930)</h2>
+                <p>Conheça o período histórico que moldou o Brasil moderno</p>
+            </div>
+        </section>
+
+        <section class="comunicacao-inclusiva">
+            <div class="container">
+                <h2>Explore a História</h2>
+                <p>Descubra os principais eventos e personagens desse período fascinante</p>
+                
+                <div class="cta-buttons">
+                    <a href="ai.html" class="btn">Converse com nossa IA especializada</a>
+                    <a href="quiz.html" class="btn">Teste seus conhecimentos</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="galeria">
+            <div class="container">
+                <div class="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="images/tela1.webp" alt="Proclamação da República">
+                          
+                        </div>
+                        <div class="carousel-item">
+                            <img src="images/tela2.png" alt="Revolta da Armada">
+                           
+                        </div>
+                        <div class="carousel-item">
+                            <img src="images/tela3.webp" alt="Presidentes da República Velha">
+                           
+                        </div>
+                        <div class="carousel-item">
+                            <img src="images/tela4.jpg" alt="Semana de Arte Moderna">
+                         
+                        </div>
+                        <div class="carousel-item">
+                            <img src="images/tela5.jpg" alt="Revolução de 1930">
+                       
+                        </div>
+                    </div>
+                    <button class="carousel-control prev">&#10094;</button>
+                    <button class="carousel-control next">&#10095;</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="sobre" class="sobre">
+            <div class="container">
+                <h2>Sobre a Primeira República</h2>
+                <p>A Primeira República, também conhecida como República Velha, foi o período da história do Brasil que se estendeu da Proclamação da República em 15 de novembro de 1889 até a Revolução de 1930. Foi marcada por:</p>
+                <ul>
+                    <li>Política do Café com Leite</li>
+                    <li>Movimentos sociais como Canudos e Contestado</li>
+                    <li>Modernização urbana e industrialização incipiente</li>
+                    <li>Semana de Arte Moderna de 1922</li>
+                    <li>Crises políticas e econômicas que culminaram na Revolução de 1930</li>
+                    <li>Política de alianças e a influência dos militares</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="recursos" class="recursos">
+            <div class="container">
+                <h2>Nossos Recursos</h2>
+                <div class="recursos-grid">
+                    <div class="recurso">
+                        <h3>IA de Conversação</h3>
+                        <p>Converse com nossa inteligência artificial especializada no período</p>
+                        <a href="ai.html" class="btn-small">Acessar IA</a>
+                    </div>
+                    <div class="recurso">
+                        <h3>Quiz Histórico</h3>
+                        <p>Teste seus conhecimentos com nosso quiz desafiador</p>
+                        <a href="quiz.html" class="btn-small">Fazer Quiz</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer id="contato">
+        <div class="container">
+            <p>&copy; 2025 Primeira República Brasileira. Todos os direitos reservados.</p>
+            <p>Contato: contato@primeirarepublica@gmail.com</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const carousel = document.querySelector('.carousel-inner');
+            const items = document.querySelectorAll('.carousel-item');
+            const prevBtn = document.querySelector('.carousel-control.prev');
+            const nextBtn = document.querySelector('.carousel-control.next');
+            let currentIndex = 0;
+            const totalItems = items.length;
+
+            function updateCarousel() {
+                carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
+            }
+
+            function nextSlide() {
+                currentIndex = (currentIndex + 1) % totalItems;
+                updateCarousel();
+            }
+
+            function prevSlide() {
+                currentIndex = (currentIndex - 1 + totalItems) % totalItems;
+                updateCarousel();
+            }
+
+            nextBtn.addEventListener('click', nextSlide);
+            prevBtn.addEventListener('click', prevSlide);
+
+            // Opcional: Autoplay
+            let interval = setInterval(nextSlide, 5000);
+
+            // Pausar autoplay quando o mouse estiver sobre o carrossel
+            const carouselContainer = document.querySelector('.carousel');
+            carouselContainer.addEventListener('mouseenter', () => {
+                clearInterval(interval);
+            });
+
+            carouselContainer.addEventListener('mouseleave', () => {
+                interval = setInterval(nextSlide, 5000);
+            });
+        });
+    </script>
+</body>
+</html>
