@@ -792,7 +792,7 @@
 
     <script>
         // Configurações da API OpenRouter
-        const OPENROUTER_API_KEY = ""; // Substitua por sua nova chave válida
+        const OPENROUTER_API_KEY = "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"; // Substitua por sua nova chave válida
         const OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions";
         const MODEL_NAME = "deepseek/deepseek-chat";
 
@@ -1306,16 +1306,15 @@
                     "messages": [
                         {
                             "role": "system",
-                            "content": "Você é um especialista na Primeira República Brasileira (1889-1930). " +
+                            "content": "Você é um especialista na Primeira República Brasileira sobre a emancipação em Ganambi Bahia(1889-1930). " +
                                    "Responda de forma detalhada e histórica, com precisão de datas e fatos. " +
+                                   "Se perguntarem sobre república que não seja sobre a emancipação ou relacionada ao teritorio que Guanambi pertencia não reponda"+
                                    "Se não souber, diga que não tem informações suficientes. " +
-                                   "Responda somente sobre a Primeira República Brasileira, não faça comparações com outros períodos ou países. " +
-                                   "Se for sobre qualquer outro assunto, diga que você não é especialista nesse assunto. " +
-                                   "Se disserem oi, olá, bom dia, boa tarde ou boa noite, responda com uma saudação amigável."+
-                                    "Se perguntarem sobre a Primeira República Brasileira, responda com informações detalhadas e relevantes."+
-                                    "Se perguntarem sobre a história do Brasil, responda com informações detalhadas e relevantes sobre a Primeira República Brasileira."+
-                                    "Induza as pessoas nas respostas a fazer perguntas sobre a Primeira República Brasileira, " +
-                                    "Não responda perguntas sobre outros assuntos, apenas sobre a Primeira República Brasileira."
+                                   "Responda somente sobre a Primeira República Brasileira em Guanambi Bahai, não faça comparações com outros períodos ou países. " +
+                                    "Se disserem oi, olá, bom dia, boa tarde ou boa noite, responda com uma saudação amigável."+
+                                    "Se perguntarem sobre a Primeira República Brasileira emancipação de Guanambi Bahai, responda com informações detalhadas e relevantes."
+                                    
+                            
                         },
                         {
                             "role": "user",
